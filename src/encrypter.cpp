@@ -118,9 +118,13 @@ string decrypt(string encrFile, string outFile){
     cout << decryptedtext;
     cout << endl << endl;
 
+
     decrFile = writeFile(outFile, decryptedtext);
 
-    return decryptedtext;
+    const char* str = decryptedtext.c_str(); //remove empty bits of string
+    decrFile = writeFile(outFile, str);
+
+    return decrFile;
 }
 
 int main(int argc, char* argv[]) {
