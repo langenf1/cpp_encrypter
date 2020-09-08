@@ -8,5 +8,3 @@ add_executable(cpp_encrypter ${PROJECT_SOURCE_DIR}/../src/encrypter.cpp)
 
 # set the project name and version
 project(cpp_encrypter VERSION 0.1.0)
-
-add_library(cryptopp STATIC IMPORTED)
