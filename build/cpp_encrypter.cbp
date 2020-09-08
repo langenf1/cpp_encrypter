@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="cpp_encrypter"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="cpp_encrypter">
+				<Option output="/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/cpp_encrypter" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 cpp_encrypter"/>
+					<CompileFile command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="cpp_encrypter/fast">
+				<Option output="/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/cpp_encrypter" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 cpp_encrypter/fast"/>
+					<CompileFile command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -f &quot;/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/src/encrypter.cpp">
+			<Option target="cpp_encrypter"/>
+		</Unit>
+		<Unit filename="/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

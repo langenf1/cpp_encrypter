@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/src/encrypter.cpp
+iostream
+-
+iomanip
+-
+string
+-
+fstream
+-
+streambuf
+-
+cryptopp/modes.h
+/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/src/cryptopp/modes.h
+cryptopp/aes.h
+/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/src/cryptopp/aes.h
+cryptopp/filters.h
+/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/src/cryptopp/filters.h
+
