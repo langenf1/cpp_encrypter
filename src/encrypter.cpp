@@ -5,27 +5,27 @@
 #include <iomanip>
 #include <string>
 #include <fstream>
-#include <streambuf>
 #include "cryptopp/modes.h"
 #include "cryptopp/aes.h"
 #include "cryptopp/filters.h"
 
 using namespace std;
+using namespace CryptoPP;
 
-//AES key
-byte key[CryptoPP::AES::DEFAULT_KEYLENGTH], iv[CryptoPP::AES::BLOCKSIZE];
+// AES key
+byte key[AES::DEFAULT_KEYLENGTH], iv[AES::BLOCKSIZE];
 
 
 /*
  * Function for reading data from a chosen file.
  *
  * @param
- * string file: filename of file which is read
+ * string file: Filename of file which is read
  */
-string readFile(string file){
+string readFile(const string& file){
     string data;
 
-    //Read file and store in buffer
+    // Read file and store in buffer
     ifstream t(file);
     stringstream bufferIn;
     bufferIn << t.rdbuf();
@@ -38,10 +38,10 @@ string readFile(string file){
  * Function for writing data to a chosen file.
  *
  * @param
- * string file: filename to which the data should be writen to
- * string data: data that must be put into the file
+ * string file: Filename to which the data should be writen to
+ * string data: Data that must be put into the file
  */
-string writeFile(string file, string data){
+string writeFile(string file, const string& data){
 
     ofstream o(file);
     o << data;
@@ -53,14 +53,11 @@ string writeFile(string file, string data){
  * Function used to encrypt data of a file.
  *
  * @param
- * string inFile: filename of orignal file which needs to be encrypted
- * string outFile: filename of outputfile chosen by user
+ * string inFile: Filename of original file which needs to be encrypted
+ * string outFile: Filename of output file chosen by user
  */
-string encrypt(string inFile, string outFile){
-
-    string plaintext;
-    string ciphertext;
-    string encrFile;
+string encrypt(const string& inFile, string outFile){
+    string plaintext, ciphertext, encrFile;
 
     plaintext = readFile(inFile);
 
@@ -69,15 +66,15 @@ string encrypt(string inFile, string outFile){
     cout << plaintext;
     cout << endl << endl;
 
-    // encrypt Text
-    CryptoPP::AES::Encryption aesEncryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
-    CryptoPP::CBC_Mode_ExternalCipher::Encryption cbcEncryption( aesEncryption, iv );
+    // Encrypt Text
+    AES::Encryption aesEncryption(key, AES::DEFAULT_KEYLENGTH);
+    CBC_Mode_ExternalCipher::Encryption cbcEncryption( aesEncryption, iv );
 
-    CryptoPP::StreamTransformationFilter stfEncryptor(cbcEncryption, new CryptoPP::StringSink( ciphertext ) );
-    stfEncryptor.Put( reinterpret_cast<const unsigned char*>( plaintext.c_str() ), plaintext.length() + 1 );
+    StreamTransformationFilter stfEncryptor(cbcEncryption, new StringSink( ciphertext));
+    stfEncryptor.Put(reinterpret_cast<const unsigned char*>(plaintext.c_str()), plaintext.length() + 1);
     stfEncryptor.MessageEnd();
 
-    //write to new file
+    // Write to new file
     outFile = outFile + string(".enc");
     encrFile = writeFile(outFile, ciphertext);
 
@@ -88,70 +85,63 @@ string encrypt(string inFile, string outFile){
  * Function used to decrypt encrypted data of a file.
  *
  * @param
- * string encrFile: filename of encrypted data
- * string outFile: filename of outputfile chosen by user
+ * string encrFile: Filename of encrypted data
+ * string outFile: Filename of output file chosen by user
  */
-string decrypt(string encrFile, string outFile){
-
-    string decryptedtext;
-    string ciphertext;
-    string decrFile;
+string decrypt(const string& encrFile, const string& outFile){
+    string decryptedtext, ciphertext, decrFile;
 
     ciphertext = readFile(encrFile);
 
-    //Dump Cipher Text
-    cout << "Cipher Text " << endl;
+    // Dump Cipher Text
+    cout << "Cipher Text" << endl;
     cout << ciphertext;
     cout << endl << endl;
 
     // Decrypt
-    CryptoPP::AES::Decryption aesDecryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
-    CryptoPP::CBC_Mode_ExternalCipher::Decryption cbcDecryption( aesDecryption, iv );
+    AES::Decryption aesDecryption(key, AES::DEFAULT_KEYLENGTH);
+    CBC_Mode_ExternalCipher::Decryption cbcDecryption(aesDecryption, iv);
 
-    CryptoPP::StreamTransformationFilter stfDecryptor(cbcDecryption, new CryptoPP::StringSink( decryptedtext ) );
-    stfDecryptor.Put( reinterpret_cast<const unsigned char*>( ciphertext.c_str() ), ciphertext.size() );
+    StreamTransformationFilter stfDecryptor(cbcDecryption, new StringSink(decryptedtext));
+    stfDecryptor.Put(reinterpret_cast<const unsigned char*>(ciphertext.c_str()), ciphertext.size());
     stfDecryptor.MessageEnd();
-
 
     // Dump Decrypted Text
     cout << "Decrypted Text: " << endl;
     cout << decryptedtext;
     cout << endl << endl;
 
-
     decrFile = writeFile(outFile, decryptedtext);
 
-    const char* str = decryptedtext.c_str(); //remove empty bits of string
+    // Remove empty bits of string
+    const char* str = decryptedtext.c_str();
     decrFile = writeFile(outFile, str);
 
     return decrFile;
 }
 
 int main(int argc, char* argv[]) {
-    //set memory for AES key
-    memset(key, 0x00, CryptoPP::AES::DEFAULT_KEYLENGTH);
-    memset(iv, 0x00, CryptoPP::AES::BLOCKSIZE);
+    // Set memory for AES key
+    memset(key, 0x00, AES::DEFAULT_KEYLENGTH);
+    memset(iv, 0x00, AES::BLOCKSIZE);
 
-    string inFile;
-    string outFile;
-    string encrFile;
-    string decrFile;
+    string inFile, outFile, encrFile, decrFile;
 
-    //Take command line arguments
-    if(argc == 3) {
+    // Take command line arguments
+    if (argc == 3) {
         inFile = argv[1];
         outFile = argv[2];
     }
     else {
-        cout << "Usage: ./AesEncrypt InputFile OutputFile\n";
+        cout << "Usage: ./AesEncrypt <InputFile> <OutputFile>\n";
         return 1;
     }
 
-    //encrypt data
+    // Encrypt data
     encrFile = encrypt(inFile, outFile);
 
-    //decrypt data
-    decrFile = decrypt(encrFile,outFile);
+    // Decrypt data
+    decrFile = decrypt(encrFile, outFile);
 
     return 0;
 }
