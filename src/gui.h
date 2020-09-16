@@ -1,7 +1,3 @@
-//
-// Created by jonas on 15-09-20.
-//
-
 #ifndef CPP_ENCRYPTER_GUI_H
 #define CPP_ENCRYPTER_GUI_H
 

@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.10)
 project(cpp_encrypter )
 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lcryptopp")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lcryptopp -lstdc++fs")
 
 # add the executable
 add_executable(cpp_encrypter /home/jonas/ClionProjects/cpp_encrypter/src/encrypter.cpp)
