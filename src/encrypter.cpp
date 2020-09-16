@@ -8,6 +8,7 @@
 #include "cryptopp/modes.h"
 #include "cryptopp/aes.h"
 #include "cryptopp/filters.h"
+#include "encrypter.h"
 
 using namespace std;
 using namespace CryptoPP;
@@ -56,8 +57,8 @@ string writeFile(string file, const string& data){
  * string inFile: Filename of original file which needs to be encrypted
  * string outFile: Filename of output file chosen by user
  */
-string encrypt(const string& inFile, string outFile){
-    string plaintext, ciphertext, encrFile;
+string Encrypter::encrypt(){
+    string plaintext, ciphertext, encrFile, outFile;
 
     plaintext = readFile(inFile);
 
@@ -75,7 +76,7 @@ string encrypt(const string& inFile, string outFile){
     stfEncryptor.MessageEnd();
 
     // Write to new file
-    outFile = outFile + string(".enc");
+    outFile = inFile + string(".enc");
     encrFile = writeFile(outFile, ciphertext);
 
     return encrFile;
@@ -88,7 +89,7 @@ string encrypt(const string& inFile, string outFile){
  * string encrFile: Filename of encrypted data
  * string outFile: Filename of output file chosen by user
  */
-string decrypt(const string& encrFile, const string& outFile){
+string Decrypter::decrypt(){
     string decryptedtext, ciphertext, decrFile;
 
     ciphertext = readFile(encrFile);
@@ -111,11 +112,9 @@ string decrypt(const string& encrFile, const string& outFile){
     cout << decryptedtext;
     cout << endl << endl;
 
-    decrFile = writeFile(outFile, decryptedtext);
-
     // Remove empty bits of string
     const char* str = decryptedtext.c_str();
-    decrFile = writeFile(outFile, str);
+    decrFile = writeFile(inFile, str);
 
     return decrFile;
 }
@@ -125,23 +124,23 @@ int main(int argc, char* argv[]) {
     memset(key, 0x00, AES::DEFAULT_KEYLENGTH);
     memset(iv, 0x00, AES::BLOCKSIZE);
 
-    string inFile, outFile, encrFile, decrFile;
+    string inFile, encrFile, decrFile;
 
     // Take command line arguments
-    if (argc == 3) {
+    if (argc == 2) {
         inFile = argv[1];
-        outFile = argv[2];
-    }
-    else {
-        cout << "Usage: ./AesEncrypt <InputFile> <OutputFile>\n";
+    } else {
+        cout << "Usage: ./AesEncrypt <InputFile> \n";
         return 1;
     }
 
+    auto enc = Encrypter(inFile);
     // Encrypt data
-    encrFile = encrypt(inFile, outFile);
+    encrFile = enc.encrypt();
 
+    auto dec = Decrypter(encrFile);
     // Decrypt data
-    decrFile = decrypt(encrFile, outFile);
+    decrFile = dec.decrypt();
 
     return 0;
 }
