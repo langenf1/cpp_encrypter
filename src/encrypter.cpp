@@ -157,12 +157,12 @@ void EncrypterWindow::on_button_encryption_toggle() {
     button_state = m_Button_Toggle.get_active();
 
     // boolean is zero from start
-    if(button_state == FALSE){
+    if(button_state == 0){
         cout << "Decrypt state - " << button_state << endl;
         text = "Decrypt";
         m_Button_Toggle.set_label(text);
 
-    } else if(button_state == TRUE){
+    } else if(button_state == 1){
         cout << "Encrypt state - " << button_state << endl;
         text = "Encrypt";
         m_Button_Toggle.set_label(text);
@@ -185,37 +185,44 @@ void EncrypterWindow::on_button_folder_clicked(){
     //Handle the response:
     switch(result)
     {
-        case(Gtk::RESPONSE_OK):
-        {
+        case(Gtk::RESPONSE_OK): {
             cout << "Select clicked." << endl;
 
-            string folder = dialog.get_filename();
             string inFile, encrFile, decrFile;
+            string folder = dialog.get_filename();
+
+            cout << "Folder selected: " << dialog.get_filename() << endl;
 
             //loop through directory
-            for(auto& p: experimental::filesystem::recursive_directory_iterator(folder)){
+            for (auto &p: experimental::filesystem::recursive_directory_iterator(folder)) {
 
                 inFile = (basic_string<char> &&) p;
 
-                // boolean is zero from start
-                if(button_state == FALSE){
-                    cout << "Encrypt file: " <<  inFile << endl;
-                    // Encrypt data
-                    auto enc = Encrypter(inFile);
-                    encrFile = enc.encrypt();
+                if (button_state == 1) {
+                    //check if file is not encrypted
+                    if (!(inFile.find(".enc") != string::npos)) {
+                        cout << "Encrypt file: " << inFile << endl;
+                        // Encrypt data
+                        auto enc = Encrypter(inFile);
+                        encrFile = enc.encrypt();
+                    } else {
+                        cout << inFile << " can not be encrypted" << endl;
+                    }
 
-                } else if(button_state == TRUE){
-                    cout << "Decrypt file: " <<  inFile << endl;
-                    // Decrypt data
-                    auto dec = Decrypter(inFile);
-                    decrFile = dec.decrypt();
+                } else if (button_state == 0) {
+                    //check if file is encrypted
+                    if (inFile.find(".enc") != string::npos) {
+                        cout << "Decrypt file: " << inFile << endl;
+                        // Decrypt data
+                        auto dec = Decrypter(inFile);
+                        decrFile = dec.decrypt();
+                    } else {
+                        cout << inFile << " can not be decrypted" << endl;
+                    }
                 }
             }
-
-            cout << "Folder selected: " << dialog.get_filename() << endl;
             break;
         }
-
         case(Gtk::RESPONSE_CANCEL):
         {
             cout << "Cancel clicked." << endl;
@@ -239,7 +246,6 @@ void EncrypterWindow::on_button_file_clicked(){
     dialog.add_button("_Cancel", Gtk::RESPONSE_CANCEL);
     dialog.add_button("_Open", Gtk::RESPONSE_OK);
 
-
     //Show the dialog and wait for a user response:
     int result = dialog.run();
 
@@ -250,29 +256,34 @@ void EncrypterWindow::on_button_file_clicked(){
         {
             cout << "Open clicked." << endl;
 
-            //Notice that this is a std::string, not a Glib::ustring.
-            string filename = dialog.get_filename();
-
             string inFile, encrFile, decrFile;
-            inFile = filename;
+            inFile  = dialog.get_filename();    //Notice that this is a std::string, not a Glib::ustring.
 
-            // boolean is zero from start
-            if(button_state == FALSE){
-                cout << "Encrypt file: " <<  filename << endl;
-                // Encrypt data
-                auto enc = Encrypter(inFile);
-                encrFile = enc.encrypt();
-
-            } else if(button_state == TRUE){
-                cout << "Decrypt file: " <<  filename << endl;
-                // Decrypt data
-                auto dec = Decrypter(inFile);
-                decrFile = dec.decrypt();
+            //encrypt state
+            if(button_state == 1){
+                //check if file is not encrypted
+                if (!(inFile.find(".enc") != string::npos)) {
+                    cout << "Encrypt file: " << inFile << endl;
+                    // Encrypt data
+                    auto enc = Encrypter(inFile);
+                    encrFile = enc.encrypt();
+                }else {
+                    cout << inFile << " can not be encrypted" << endl;
+                }
+            //Decrypt state
+            } else if(button_state == 0) {
+                //check if file is encrypted
+                if (inFile.find(".enc") != string::npos) {
+                    cout << "Decrypt file: " << inFile << endl;
+                    // Decrypt data
+                    auto dec = Decrypter(inFile);
+                    decrFile = dec.decrypt();
+                } else {
+                    cout << inFile << " can not be decrypted" << endl;
+                }
             }
-
             break;
         }
-
         case(Gtk::RESPONSE_CANCEL):
         {
             cout << "Cancel clicked." << endl;
@@ -286,16 +297,15 @@ void EncrypterWindow::on_button_file_clicked(){
     }
 }
 
-
-
-
 int main(int argc, char* argv[]) {
-    // Set memory for AES key
+    //Set memory for AES key
     memset(key, 0x00, AES::DEFAULT_KEYLENGTH);
     memset(iv, 0x00, AES::BLOCKSIZE);
 
+    //Create Gtkmm application
     auto app = Gtk::Application::create(argc, argv, "org.gtkmm.encrypter");
 
+    //create app window
     EncrypterWindow window;
 
     return app->run(window);
