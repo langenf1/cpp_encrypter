@@ -14,7 +14,7 @@
 using namespace std;
 using namespace CryptoPP;
 
-// AES key
+// AES 16 bytes key
 byte key[AES::DEFAULT_KEYLENGTH], iv[AES::BLOCKSIZE];
 
 /*
@@ -95,7 +95,7 @@ string Decrypter::decrypt(){
     ciphertext = readFile(encrFile);
 
     // Dump Cipher Text
-    cout << "Cipher Text" << endl;
+    cout << "Cipher Text (" << ciphertext.size() << " bytes)" << endl;
     cout << ciphertext;
     cout << endl << endl;
 
@@ -108,7 +108,7 @@ string Decrypter::decrypt(){
     stfDecryptor.MessageEnd();
 
     // Dump Decrypted Text
-    cout << "Decrypted Text: " << endl;
+    cout << "Decrypted Text (" << decryptedtext.size() << " bytes)" << endl;
     cout << decryptedtext;
     cout << endl << endl;
 
@@ -120,32 +120,57 @@ string Decrypter::decrypt(){
 }
 
 
-ExampleWindow::ExampleWindow()
-        : m_ButtonBox(Gtk::ORIENTATION_VERTICAL),
+EncrypterWindow::EncrypterWindow()
+        : m_Button_Toggle("Decrypt"),
           m_Button_File("Choose File"),
-          m_Button_Folder("Choose Folder")
-{
+          m_Button_Folder("Choose Folder"){
+
     set_border_width(10);
-    set_title("Gtk::FileSelection example");
+    set_default_size(250,50);
+    set_title("File encrypter");
 
-    add(m_ButtonBox);
+    add(m_gridBox);
 
-    m_ButtonBox.pack_start(m_Button_File);
+    m_gridBox.add(m_Button_File);
     m_Button_File.signal_clicked().connect(sigc::mem_fun(*this,
-                                                         &ExampleWindow::on_button_file_clicked) );
+                                                         &EncrypterWindow::on_button_file_clicked) );
 
-    m_ButtonBox.pack_start(m_Button_Folder);
+    m_gridBox.add(m_Button_Folder);
     m_Button_Folder.signal_clicked().connect(sigc::mem_fun(*this,
-                                                           &ExampleWindow::on_button_folder_clicked) );
+                                                           &EncrypterWindow::on_button_folder_clicked) );
 
+    m_gridBox.attach_next_to(m_Button_Toggle,POS_BOTTOM, 2, 1);
+    m_Button_Toggle.signal_toggled().connect(sigc::mem_fun(*this,
+                                                           &EncrypterWindow::on_button_encryption_toggle) );
     show_all_children();
 }
+
 //destroy window
-ExampleWindow::~ExampleWindow()
+EncrypterWindow::~EncrypterWindow()
 {
 }
 
-void ExampleWindow::on_button_folder_clicked(){
+
+void EncrypterWindow::on_button_encryption_toggle() {
+    string text;
+
+    button_state = m_Button_Toggle.get_active();
+
+    // boolean is zero from start
+    if(button_state == FALSE){
+        cout << "Decrypt state - " << button_state << endl;
+        text = "Decrypt";
+        m_Button_Toggle.set_label(text);
+
+    } else if(button_state == TRUE){
+        cout << "Encrypt state - " << button_state << endl;
+        text = "Encrypt";
+        m_Button_Toggle.set_label(text);
+    }
+
+}
+
+void EncrypterWindow::on_button_folder_clicked(){
 
     Gtk::FileChooserDialog dialog("Please choose a folder",
                                   Gtk::FILE_CHOOSER_ACTION_SELECT_FOLDER);
@@ -169,21 +194,28 @@ void ExampleWindow::on_button_folder_clicked(){
 
             //loop through directory
             for(auto& p: experimental::filesystem::recursive_directory_iterator(folder)){
+
                 inFile = (basic_string<char> &&) p;
-                auto enc = Encrypter(inFile);
-                // Encrypt data
-                encrFile = enc.encrypt();
 
-                auto dec = Decrypter(encrFile);
-                // Decrypt data
-                decrFile = dec.decrypt();
+                // boolean is zero from start
+                if(button_state == FALSE){
+                    cout << "Encrypt file: " <<  inFile << endl;
+                    // Encrypt data
+                    auto enc = Encrypter(inFile);
+                    encrFile = enc.encrypt();
 
-                cout << p << endl;
+                } else if(button_state == TRUE){
+                    cout << "Decrypt file: " <<  inFile << endl;
+                    // Decrypt data
+                    auto dec = Decrypter(inFile);
+                    decrFile = dec.decrypt();
+                }
             }
 
             cout << "Folder selected: " << dialog.get_filename() << endl;
             break;
         }
+
         case(Gtk::RESPONSE_CANCEL):
         {
             cout << "Cancel clicked." << endl;
@@ -197,7 +229,7 @@ void ExampleWindow::on_button_folder_clicked(){
     }
 }
 
-void ExampleWindow::on_button_file_clicked(){
+void EncrypterWindow::on_button_file_clicked(){
 
     Gtk::FileChooserDialog dialog("Please choose a file",
                                   Gtk::FILE_CHOOSER_ACTION_OPEN);
@@ -207,24 +239,6 @@ void ExampleWindow::on_button_file_clicked(){
     dialog.add_button("_Cancel", Gtk::RESPONSE_CANCEL);
     dialog.add_button("_Open", Gtk::RESPONSE_OK);
 
-    //Add filters, so that only certain file types can be selected:
-
-    auto filter_text = Gtk::FileFilter::create();
-    filter_text->set_name("Text files");
-    filter_text->add_mime_type("text/plain");
-    dialog.add_filter(filter_text);
-
-    auto filter_cpp = Gtk::FileFilter::create();
-    filter_cpp->set_name("C/C++ files");
-    filter_cpp->add_mime_type("text/x-c");
-    filter_cpp->add_mime_type("text/x-c++");
-    filter_cpp->add_mime_type("text/x-c-header");
-    dialog.add_filter(filter_cpp);
-
-    auto filter_any = Gtk::FileFilter::create();
-    filter_any->set_name("Any files");
-    filter_any->add_pattern("*");
-    dialog.add_filter(filter_any);
 
     //Show the dialog and wait for a user response:
     int result = dialog.run();
@@ -242,17 +256,23 @@ void ExampleWindow::on_button_file_clicked(){
             string inFile, encrFile, decrFile;
             inFile = filename;
 
-            auto enc = Encrypter(inFile);
-            // Encrypt data
-            encrFile = enc.encrypt();
+            // boolean is zero from start
+            if(button_state == FALSE){
+                cout << "Encrypt file: " <<  filename << endl;
+                // Encrypt data
+                auto enc = Encrypter(inFile);
+                encrFile = enc.encrypt();
 
-            auto dec = Decrypter(encrFile);
-            // Decrypt data
-            decrFile = dec.decrypt();
+            } else if(button_state == TRUE){
+                cout << "Decrypt file: " <<  filename << endl;
+                // Decrypt data
+                auto dec = Decrypter(inFile);
+                decrFile = dec.decrypt();
+            }
 
-            cout << "File selected: " <<  filename << endl;
             break;
         }
+
         case(Gtk::RESPONSE_CANCEL):
         {
             cout << "Cancel clicked." << endl;
@@ -266,6 +286,9 @@ void ExampleWindow::on_button_file_clicked(){
     }
 }
 
+
+
+
 int main(int argc, char* argv[]) {
     // Set memory for AES key
     memset(key, 0x00, AES::DEFAULT_KEYLENGTH);
@@ -273,7 +296,7 @@ int main(int argc, char* argv[]) {
 
     auto app = Gtk::Application::create(argc, argv, "org.gtkmm.encrypter");
 
-    ExampleWindow window;
+    EncrypterWindow window;
 
     return app->run(window);
 }

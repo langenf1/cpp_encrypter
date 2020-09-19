@@ -5,20 +5,24 @@
 
 using namespace Gtk;
 
-class ExampleWindow : public Gtk::Window
+class EncrypterWindow : public Gtk::Window
 {
 public:
-    ExampleWindow();
-    virtual ~ExampleWindow();
+    EncrypterWindow();
+    virtual ~EncrypterWindow();
+    gboolean button_state;
 
 protected:
     //Signal handlers:
     void on_button_file_clicked();
     void on_button_folder_clicked();
+    void on_button_encryption_toggle();
 
     //Child widgets:
-    ButtonBox m_ButtonBox;
+    Grid m_gridBox;
     Button m_Button_File, m_Button_Folder;
+    ToggleButton m_Button_Toggle;
+
 };
 
 #endif //CPP_ENCRYPTER_GUI_H
