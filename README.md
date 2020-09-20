@@ -14,18 +14,20 @@ To be able to run the code in this repository, the required packages must be ins
 
 * CryptoPP   
 * GTKMM 3.0
+* CMake
 
 #### Building
+First of all you must create the Makefile using CMake. To do this head over to the build directory and run the command `cmake .`.
 
-On windows open cmd and head over to the build directory and make sure you have Cygwin make installed or another
-program that is capable of handling Makefiles. Type `make -f Makefile` in your command prompt.
+On Windows make sure you have 'Cygwin make' installed or another program that is capable of handling Makefiles. 
+Type `make -f Makefile` in your command prompt.
 
-On other OS's make sure you have a program installed that can handle Makefiles, on Linux
+On other OS's make sure you have another program installed that can handle Makefiles, on Linux
 you will most likely have to install the build essentials such as 
-gcc, gcc-c++, make, automake, kernel-devel. The package names differ per OS. Head over to the build
+gcc, gcc-c++, make, automake, kernel-devel. The package names differ per OS. Once again head over to the build
 directory in your terminal and simply type `make`.
 
 #### Launching
 
-You can launch the program by executing the following command:   
-`./build/cpp_encrypter`
+You can launch the program by executing the following command in the build directory:   
+`./cpp_encrypter`
