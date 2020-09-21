@@ -14,6 +14,7 @@ To be able to run the code in this repository, the required packages must be ins
 
 * CryptoPP   
 * GTKMM 3.0
+* CMAKE
 
 #### Building
 
@@ -33,9 +34,11 @@ You can launch the program by executing the following command:
 
 
 #### Generating documentation
-To generate documentation for this program first install DoxyGen using:
+To generate documentation for this program first install DoxyGen using:   
 `sudo apt-get install doxygen`
 
-Followed by executing the terminal command from the directory *cpp_encrypter/docs*:
+Followed by executing the terminal command from the directory *cpp_encrypter/docs*:   
 `doxygen Doxyfile`
+
+By editing the *doxygen* configuration file one can change the release version, documented files to be parsed and more.
 
