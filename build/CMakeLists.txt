@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Set the project name and version
-project(cpp_encrypter VERSION 0.1.0)
+project(cpp_encrypter VERSION 1.0.0)
 
 # Set C++ defaults and flags
 set(CMAKE_CXX_STANDARD 11)
@@ -12,7 +12,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lcryptopp -lstdc++fs")
 # Find necessary libraries
 find_package(PkgConfig)
 pkg_check_modules(GTKMM gtkmm-3.0)
-pkg_check_modules(CRYPTOPP cryptopp)
+pkg_check_modules(CRYPTOPP libcrypto++)
 
 # Link library directories
 link_directories(${GTKMM_LIBRARY_DIRS})

@@ -2,7 +2,7 @@
 
 [![version](https://img.shields.io/badge/version-v1.0.0-brightgreen)]()
 
-This repository was created to provide a public file encrypter and decrypter written
+This repository was created to provide a public inFile encrypter and decrypter written
 in C++. This code was created in 3 weeks with the purpose of completing an assignment for
 by the HvA Technische Informatica Specifiek Themasemester.
 
@@ -12,22 +12,30 @@ by the HvA Technische Informatica Specifiek Themasemester.
 
 To be able to run the code in this repository, the required packages must be installed:   
 
-* Crypto++  
+* CryptoPP   
 * GTKMM 3.0
-* CMake
 
 #### Building
-First of all you must create the Makefile using CMake. To do this head over to the build directory and run the command `cmake .`.
 
-On Windows make sure you have 'Cygwin make' installed or another program that is capable of handling Makefiles. 
-Type `make -f Makefile` in your command prompt.
+On windows open cmd and head over to the build directory and make sure you have Cygwin make installed or another
+program that is capable of handling Makefiles. Type `make -f Makefile` in your command prompt.
 
-On other OS's make sure you have another program installed that can handle Makefiles, on Linux
+On other OS's make sure you have a program installed that can handle Makefiles, on Linux
 you will most likely have to install the build essentials such as 
-gcc, gcc-c++, make, automake, kernel-devel. The package names differ per OS. Once again head over to the build
+gcc, gcc-c++, make, automake, kernel-devel. The package names differ per OS. Head over to the build
 directory in your terminal and simply type `make`.
 
 #### Launching
 
-You can launch the program by executing the following command in the build directory:   
-`./cpp_encrypter`
+You can launch the program by executing the following command:   
+`./build/cpp_encrypter`
+
+
+
+#### Generating documentation
+To generate documentation for this program first install DoxyGen using:
+`sudo apt-get install doxygen`
+
+Followed by executing the terminal command from the directory *cpp_encrypter/docs*:
+`doxygen Doxyfile`
+

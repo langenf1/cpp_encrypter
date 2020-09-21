@@ -1,3 +1,0 @@
-/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/CMakeFiles/rebuild_cache.dir
-/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/CMakeFiles/edit_cache.dir
-/mnt/E462680F6267E530/OneDrive/School/Overige/cpp_encrypter/build/CMakeFiles/cpp_encrypter.dir
