@@ -2,7 +2,7 @@
 
 [![version](https://img.shields.io/badge/version-v1.0.0-brightgreen)]()
 
-This repository was created to provide a public inFile encrypter and decrypter written
+This repository was created to provide a public file encrypter and decrypter written
 in C++. This code was created in 3 weeks with the purpose of completing an assignment for
 by the HvA Technische Informatica Specifiek Themasemester.
 
@@ -12,7 +12,7 @@ by the HvA Technische Informatica Specifiek Themasemester.
 
 To be able to run the code in this repository, the required packages must be installed:   
 
-* CryptoPP   
+* Crypto++  
 * GTKMM 3.0
 * CMake
 
