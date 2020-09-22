@@ -12,7 +12,7 @@ by the HvA Technische Informatica Specifiek Themasemester.
 
 To be able to run the code in this repository, the required packages must be installed:   
 
-* Crypto++ some things  
+* Crypto++  
 * GTKMM 3.0
 * CMAKE
 
